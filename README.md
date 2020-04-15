@@ -41,6 +41,6 @@ You can also define weights for words and score threshold.
       ("STANDARD", 0.3m)
   );
   
-  var result = new StringSearch(_candidates, weights).Search("25' STANDARD CONTAINER");
-  Assert.AreEqual((null, 0.4m), result);
+  var result = new StringSearch(_candidates, weights).Search("25' STANDARD CONTAINER", 1m);
+  Assert.AreEqual((null, 0.4m), result); // Result is null because the threshold is 1m
 ```

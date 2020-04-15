@@ -8,30 +8,22 @@ namespace String.Search.Tests
     [TestClass]
     public class StringSearchTestscs
     {
-        private List<Candidate> _candidates;
+        private List<string> _candidates;
         [TestInitialize]
         public void Init()
         {
-            _candidates = new List<Candidate>
+            _candidates = new List<string>
             {
-                new Candidate("_20 FT 20' STANDARD CONTAINER"),
-                new Candidate("_40 FT 40' STANDARD CONTAINER"),
-                new Candidate("_40 HC 40' HIGH CUBE CONTAINER"),
-                new Candidate("_45 GP 45' GENERAL PURPOSE CONTAINER"),
-                new Candidate("_45 HC 45' HIGH CUBE CONTAINER"),
-                new Candidate("_20 DR 20' DRY REEFER CONTAINER"),
-                new Candidate("_20 FC 20' FLEXIBAG CONTAINER"),
-                new Candidate("_20 FG 20' FOOD GRADE CONTAINER"),
-                new Candidate("_20 FR 20' FLAT RACK CONTAINER"),
-                new Candidate("_20 GH 20' GARMENT ON HANGER CONTAINER"),
-                new Candidate("_20 HC 20' HIGH CUBE CONTAINER"),
-                new Candidate("_20 HD 20' H/D REEFER CONTAINER"),
-                new Candidate("_20 IT 20' ISO TANK"),
-                new Candidate("_20 OT 20' OPEN TOP CONTAINER"),
-                new Candidate("_20 PF 20' PLATFORMS"),
-                new Candidate("_20 RF 20' REEFER CONTAINER"),
-                new Candidate("_20 RH 20' HIGH CUBE REEFER CONTAINER"),
-                new Candidate("_20 SL 20' SLIDING OPEN CONTAINER")
+                "_20 FT 20' STANDARD CONTAINER",
+                "_40 FT 40' STANDARD CONTAINER",
+                "_40 HC 40' HIGH CUBE CONTAINER",
+                "_45 GP 45' GENERAL PURPOSE CONTAINER",
+                "_45 HC 45' HIGH CUBE CONTAINER",
+                "_20 DR 20' DRY REEFER CONTAINER",
+                "_20 FC 20' FLEXIBAG CONTAINER",
+                "_20 FG 20' FOOD GRADE CONTAINER",
+                "_20 FR 20' FLAT RACK CONTAINER",
+                "_20 GH 20' GARMENT ON HANGER CONTAINER",
             };
         }
 
@@ -41,7 +33,7 @@ namespace String.Search.Tests
             var ss = new StringSearch(_candidates);
             var result = ss.Search("40' High Cube Dry");
 
-            Assert.AreEqual("_40 HC 40' HIGH CUBE CONTAINER", result);
+            Assert.AreEqual(("_40 HC 40' HIGH CUBE CONTAINER", 3), result);
         }
 
         [TestMethod]
@@ -50,7 +42,21 @@ namespace String.Search.Tests
             var ss = new StringSearch(_candidates);
             var result = ss.Search("ABC");
             
-            Assert.IsNull(result);
+            Assert.AreEqual((null, 0), result);
+        }
+
+        [TestMethod]
+        public void Search_WithWeights_ShouldAsExpected()
+        {
+            var weights = new ScoreWeights();
+            weights.Add(
+                ("container", 0.1m),
+                ("STANDARD", 0.3m)
+            );
+            var ss = new StringSearch(_candidates, weights);
+            var result = ss.Search("25' STANDARD CONTAINER");
+
+            Assert.AreEqual((null, 0.4m), result);
         }
     }                           
 }                               

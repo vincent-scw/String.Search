@@ -7,13 +7,24 @@ namespace String.Search
 {
     public class StringSearch
     {
-        private readonly Candidate[] _candidates;
-        public StringSearch(IEnumerable<Candidate> candidates)
+        private readonly string[] _candidates;
+        private readonly ScoreWeights _definition;
+        private readonly decimal _threshold;
+        public StringSearch(IEnumerable<string> candidates)
         {
             _candidates = candidates.ToArray();
+            _definition = new ScoreWeights();
         }
 
-        public string Search(string value)
+        public StringSearch(IEnumerable<string> candidates, 
+            ScoreWeights definition, decimal threshold = ScoreWeights.DefaultScore)
+        {
+            _candidates = candidates.ToArray();
+            _definition = definition;
+            _threshold = threshold;
+        }
+
+        public (string match, decimal score) Search(string value)
         {
             var valueArray = StringSplitter.SplitSortedLowercase(value);
             int index = -1;
@@ -21,7 +32,7 @@ namespace String.Search
 
             for (int i = 0; i < _candidates.Length; i++)
             {
-                var score = Compare(StringSplitter.SplitSortedLowercase(_candidates[i].Value), valueArray);
+                var score = Compare(StringSplitter.SplitSortedLowercase(_candidates[i]), valueArray);
                 if (score > maxScore)
                 {
                     maxScore = score;
@@ -29,10 +40,10 @@ namespace String.Search
                 }
             }
 
-            if (index < 0)
-                return null;
+            if (index < _threshold)
+                return (null, maxScore);
 
-            return _candidates[index].Value;
+            return (_candidates[index], maxScore);
         }
 
         private decimal Compare(string[] v, string[] c)
@@ -44,7 +55,8 @@ namespace String.Search
                 var diff = v[iv].CompareTo(c[ic]);
                 if (diff == 0)
                 {
-                    score++;
+                    var currScore = _definition.GetScore(v[iv]);
+                    score += currScore;
                     iv++;
                     ic++;
                 }

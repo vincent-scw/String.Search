@@ -25,7 +25,13 @@ namespace String.Search
                 return replaced.Trim().Split(' ');
             });
 
-            return ret.ToArray();
+            return ret.Distinct().ToArray();
+        }
+
+        public static string[] SplitSortedLowercase(string source)
+        {
+            var ret = Split(source);
+            return ret.Select(s => s.ToLower()).OrderBy(x => x).ToArray();
         }
     }
 }

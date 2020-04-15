@@ -53,5 +53,16 @@ namespace String.Search.Tests
             Assert.AreEqual("copies", words[2]);
             Assert.AreEqual("Sold", words[3]);
         }
+
+        [TestMethod]
+        public void Split_WithSortedAndLowercase_ShouldAsExpected()
+        {
+            var words = StringSplitter.SplitSortedLowercase("_20 copiesSold AAA.");
+
+            Assert.AreEqual("20", words[0]);
+            Assert.AreEqual("aaa", words[1]);
+            Assert.AreEqual("copies", words[2]);
+            Assert.AreEqual("sold", words[3]);
+        }
     }
 }

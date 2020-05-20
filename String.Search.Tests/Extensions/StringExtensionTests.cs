@@ -31,8 +31,9 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
             var results = text.Search(tf).ToArray();
 
             Assert.AreEqual(5, results.Length);
-            Assert.AreEqual(2, results.Where(x => x.value == "neural networks").Count());
-            Assert.AreEqual(2, results.Where(x => x.value == "deep learning").Count());
+            Assert.AreEqual(1, results.Where(x => x.value == "neural networks").Count());
+            Assert.AreEqual(1, results.Where(x => x.value == "Neural Networks").Count());
+            Assert.AreEqual(2, results.Where(x => x.value == "Deep Learning").Count());
         }
 
         [TestMethod]

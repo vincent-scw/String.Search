@@ -10,7 +10,7 @@ namespace String.Search
 
         public AcFinder(IEnumerable<string> terms)
         {
-            Root = new TrieNode('~', null); // Any meaningless char is OK here
+            Root = new TrieNode('~', -1); // Any meaningless char is OK here
             foreach (var term in terms)
             {
                 Insert(term);
@@ -61,8 +61,8 @@ namespace String.Search
                 {
                     if (tmp.IsEndingChar)
                     {
-                        var pos = i - tmp.Data.Length + 1;
-                        ret.Add((pos, tmp.Data));
+                        var pos = i - tmp.Length + 1;
+                        ret.Add((pos, text.Substring(pos, tmp.Length)));
                     }
 
                     tmp = tmp.Fail;
@@ -71,6 +71,39 @@ namespace String.Search
 
             return ret;
         }
+
+        //public string Replace(string text, char replaceWith)
+        //{
+        //    var n = text.Length;
+        //    var p = Root;
+        //    for (var i = 0; i < n; i++)
+        //    {
+        //        var currentChar = char.ToLower(text[i]);
+        //        while (!p.Children.ContainsKey(currentChar) && p != Root)
+        //        {
+        //            p = p.Fail;
+        //        }
+
+        //        if (p.Children.ContainsKey(currentChar))
+        //        {
+        //            p = p.Children[currentChar];
+        //        }
+
+        //        if (p == null) p = Root;
+
+        //        var tmp = p;
+        //        while (tmp != Root)
+        //        {
+        //            if (tmp.IsEndingChar)
+        //            {
+        //                var pos = i - tmp.Data.Length + 1;
+                        
+        //            }
+
+        //            tmp = tmp.Fail;
+        //        }
+        //    }
+        //}
 
         private void Insert(string term)
         {
@@ -102,7 +135,7 @@ namespace String.Search
                         var q = p.Fail;
                         while (q != null)
                         {
-                            q.Children.TryGetValue(pc.Current, out TrieNode qc);
+                            q.Children.TryGetValue(pc.Data, out TrieNode qc);
                             if (qc != null)
                             {
                                 pc.Fail = qc;

@@ -38,7 +38,7 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
 ```
 
 - Replace
-```
+```csharp
     var result = EnglishText.Replace(new List<string>
     {
         "Deep Learning",

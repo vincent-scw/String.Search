@@ -26,13 +26,13 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
 ```csharp
     var results = EnglishText.Search(new List<string>
     {
-        "Deep Learning",
-        "brain",
-        "neural networks"
+        "Deep Learning",       // There are two matches in text, case insensitive
+        "brain",               // One match in text
+        "neural networks"      // Two matches in text
     }).ToArray();
 
     Assert.AreEqual(5, results.Length);
-    Assert.AreEqual(1, results.Where(x => x.value == "neural networks").Count());
+    Assert.AreEqual((497, "neural networks"), results[1]); // 497 is the position
     Assert.AreEqual(1, results.Where(x => x.value == "Neural Networks").Count());
     Assert.AreEqual(2, results.Where(x => x.value == "Deep Learning").Count());
 ```

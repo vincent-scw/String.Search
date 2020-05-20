@@ -40,7 +40,7 @@ namespace String.Search
                 }
             }
 
-            if (index < _threshold)
+            if (maxScore < _threshold)
                 return (null, maxScore);
 
             return (_candidates[index], maxScore);

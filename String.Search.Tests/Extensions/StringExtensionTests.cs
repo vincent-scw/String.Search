@@ -25,14 +25,12 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
         [TestMethod]
         public void StringSearch_Should_ReturnExpected()
         {
-            var tf = new AcFinder(new List<string>
+            var results = EnglishText.Search(new List<string>
             {
                 "Deep Learning",
                 "brain",
                 "neural networks"
-            });
-
-            var results = EnglishText.Search(tf).ToArray();
+            }).ToArray();
 
             Assert.AreEqual(5, results.Length);
             Assert.AreEqual(1, results.Where(x => x.value == "neural networks").Count());
@@ -43,13 +41,11 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
         [TestMethod]
         public void StringSearch_Unicode_Should_ReturnExpected()
         {
-            var tf = new AcFinder(new List<string>
+            var results = ChineseText.Search(new List<string>
             {
                 "机器学习",
                 "人工智能"
-            });
-
-            var results = ChineseText.Search(tf).ToArray();
+            }).ToArray();
 
             Assert.AreEqual(9, results.Length);
             Assert.AreEqual(5, results.Where(x => x.value == "机器学习").Count());
@@ -59,14 +55,12 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
         [TestMethod]
         public void StringReplace_Should_ReturnExpected()
         {
-            var tf = new AcFinder(new List<string>
+            var result = EnglishText.Replace(new List<string>
             {
                 "Deep Learning",
                 "brain",
                 "neural networks"
             });
-
-            var result = EnglishText.Replace(tf);
 
             Assert.AreEqual(@"It’s a technique for building a computer program that learns from data. 
 It is based very loosely on how we think the human ***** works. 
@@ -80,13 +74,11 @@ try ************* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.", resul
         [TestMethod]
         public void StringReplace_Unicode_Should_ReturnExpected()
         {
-            var tf = new AcFinder(new List<string>
+            var result = ChineseText.Replace(new List<string>
             {
                 "机器学习",
                 "人工智能"
             });
-
-            var result = ChineseText.Replace(tf);
 
             Assert.AreEqual(@"****是****的一个分支。
 ****的研究历史有着一条从以“推理”为重点，到以“知识”为重点，再到以“学习”为重点的自然、清晰的脉络。显然，****是实现****的一个途径，即以****为手段解决****中的问题。

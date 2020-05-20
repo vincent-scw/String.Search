@@ -72,38 +72,41 @@ namespace String.Search
             return ret;
         }
 
-        //public string Replace(string text, char replaceWith)
-        //{
-        //    var n = text.Length;
-        //    var p = Root;
-        //    for (var i = 0; i < n; i++)
-        //    {
-        //        var currentChar = char.ToLower(text[i]);
-        //        while (!p.Children.ContainsKey(currentChar) && p != Root)
-        //        {
-        //            p = p.Fail;
-        //        }
+        public string Replace(string text, char replaceWith = '*')
+        {
+            string newText = text;
+            var n = text.Length;
+            var p = Root;
+            for (var i = 0; i < n; i++)
+            {
+                var currentChar = char.ToLower(text[i]);
+                while (!p.Children.ContainsKey(currentChar) && p != Root)
+                {
+                    p = p.Fail;
+                }
 
-        //        if (p.Children.ContainsKey(currentChar))
-        //        {
-        //            p = p.Children[currentChar];
-        //        }
+                if (p.Children.ContainsKey(currentChar))
+                {
+                    p = p.Children[currentChar];
+                }
 
-        //        if (p == null) p = Root;
+                if (p == null) p = Root;
 
-        //        var tmp = p;
-        //        while (tmp != Root)
-        //        {
-        //            if (tmp.IsEndingChar)
-        //            {
-        //                var pos = i - tmp.Data.Length + 1;
-                        
-        //            }
+                var tmp = p;
+                while (tmp != Root)
+                {
+                    if (tmp.IsEndingChar)
+                    {
+                        var pos = i - tmp.Length + 1;
+                        newText = newText.Remove(pos, tmp.Length).Insert(pos, new string(replaceWith, tmp.Length));
+                    }
 
-        //            tmp = tmp.Fail;
-        //        }
-        //    }
-        //}
+                    tmp = tmp.Fail;
+                }
+            }
+
+            return newText;
+        }
 
         private void Insert(string term)
         {

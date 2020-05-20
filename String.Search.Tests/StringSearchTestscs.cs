@@ -37,15 +37,6 @@ namespace String.Search.Tests
         }
 
         [TestMethod]
-        public void Search_NoMatches_ShouldReturnNull()
-        {
-            var ss = new FuzzyMatcher(_candidates);
-            var result = ss.Match("ABC");
-            
-            Assert.AreEqual((null, 0), result);
-        }
-
-        [TestMethod]
         public void Search_WithWeights_ShouldAsExpected()
         {
             var weights = new ScoreWeights();

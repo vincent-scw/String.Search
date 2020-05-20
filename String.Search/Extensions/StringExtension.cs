@@ -10,5 +10,10 @@ namespace String.Search.Extensions
         {
             return acFinder.Match(text);
         }
+
+        public static string Replace(this string text, AcFinder acFinder, char replaceWith = '*')
+        {
+            return acFinder.Replace(text, replaceWith);
+        }
     }
 }

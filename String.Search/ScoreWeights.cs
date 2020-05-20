@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("String.Search.Tests")]
+
 namespace String.Search
 {
-    public sealed class ScoreWeights
+    sealed class ScoreWeights
     {
         public const decimal DefaultScore = 1;
 

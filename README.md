@@ -1,7 +1,7 @@
 # String.Search
 
 ## What is String.Search?
-String.Search is a simple library to implement a fuzzy search in a given list.
+String.Search is a simple library to implement a full text search with given patterns.
 
 ## How do I get started?
 Install the package from Nuget
@@ -10,37 +10,50 @@ Install-Package String.Search
 ```
 
 
-Define your candidates
+## Examples
+For given text, such as
 ```
-  private List<string> candidates = new List<string>
-  {
-      "FT 20' STANDARD CONTAINER",
-      "FT 40' STANDARD CONTAINER",
-      "HC 40' HIGH CUBE CONTAINER",
-      "GP 45' GENERAL PURPOSE CONTAINER",
-      "HC 45' HIGH CUBE CONTAINER",
-      "DR 20' DRY REEFER CONTAINER",
-      "FC 20' FLEXIBAG CONTAINER",
-      "FG 20' FOOD GRADE CONTAINER",
-      "FR 20' FLAT RACK CONTAINER",
-      "GH 20' GARMENT ON HANGER CONTAINER",
-  };
+	private const string EnglishText = @"It’s a technique for building a computer program that learns from data. 
+It is based very loosely on how we think the human brain works. 
+First, a collection of software “neurons” are created and connected together, 
+allowing them to send messages to each other. Next, the network is asked to solve a problem, 
+which it attempts to do over and over, each time strengthening the connections that lead to success and diminishing those that lead to failure. 
+For a more detailed introduction to neural networks, Michael Nielsen’s Neural Networks and Deep Learning is a good place to start. For a more technical overview, 
+try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
 ```
 
-Search
+- Search.
 ```
-  var result = new StringSearch(_candidates).Search("40' High Cube Dry");
-  Assert.AreEqual(("_40 HC 40' HIGH CUBE CONTAINER", 3), result);
+	var results = EnglishText.Search(new List<string>
+        {
+            "Deep Learning",
+            "brain",
+            "neural networks"
+        }).ToArray();
+
+	Assert.AreEqual(5, results.Length);
+	Assert.AreEqual(1, results.Where(x => x.value == "neural networks").Count());
+	Assert.AreEqual(1, results.Where(x => x.value == "Neural Networks").Count());
+	Assert.AreEqual(2, results.Where(x => x.value == "Deep Learning").Count());
 ```
 
-You can also define weights for words and score threshold.
+- Replace
 ```
-  var weights = new ScoreWeights();
-  weights.Add(
-      ("container", 0.1m),
-      ("STANDARD", 0.3m)
-  );
-  
-  var result = new StringSearch(_candidates, weights).Search("25' STANDARD CONTAINER", 1m);
-  Assert.AreEqual((null, 0.4m), result); // Result is null because the threshold is 1m
+	var result = EnglishText.Replace(new List<string>
+        {
+            "Deep Learning",
+            "brain",
+            "neural networks"
+        });
+
+    Assert.AreEqual(@"It’s a technique for building a computer program that learns from data. 
+It is based very loosely on how we think the human ***** works. 
+First, a collection of software “neurons” are created and connected together, 
+allowing them to send messages to each other. Next, the network is asked to solve a problem, 
+which it attempts to do over and over, each time strengthening the connections that lead to success and diminishing those that lead to failure. 
+For a more detailed introduction to ***************, Michael Nielsen’s *************** and ************* is a good place to start. For a more technical overview, 
+try ************* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.", 
+	result);
 ```
+
+It also works for Unicode strings.

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace String.Search.Tests
 {
     [TestClass]
-    public class TrieTests
+    public class AcFinderTests
     {
         [TestMethod]
         public void TrieExists_Should_ReturnExpected()
         {
-            var trie = new Trie(new List<string>
+            var trie = new AcFinder(new List<string>
             {
                 "how",
                 "hi",
@@ -31,6 +33,27 @@ namespace String.Search.Tests
             Assert.IsFalse(trie.Exists("HERE"));
             Assert.IsFalse(trie.Exists("he"));
             Assert.IsFalse(trie.Exists("she"));
+        }
+
+        [TestMethod]
+        public void TrieSearch_Should_ReturnExpected()
+        {
+            var trie = new AcFinder(new List<string>
+            {
+                "abcd",
+                "bcd",
+                "BC",
+                "c",
+                "bc cd"
+            });
+
+            var ret = trie.Match("dd abdbc cd zzzz").ToArray();
+            
+            Assert.AreEqual(4, ret.Length);
+            Assert.AreEqual((6, "bc"), ret[0]);
+            Assert.AreEqual((7, "c"), ret[1]);
+            Assert.AreEqual((9, "c"), ret[2]);
+            Assert.AreEqual((6, "bc cd"), ret[3]);
         }
     }
 }

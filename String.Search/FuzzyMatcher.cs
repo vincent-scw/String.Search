@@ -5,18 +5,18 @@ using System.Text;
 
 namespace String.Search
 {
-    public class StringSearch
+    public class FuzzyMatcher
     {
         private readonly string[] _candidates;
         private readonly ScoreWeights _definition;
         private readonly decimal _threshold;
-        public StringSearch(IEnumerable<string> candidates)
+        public FuzzyMatcher(IEnumerable<string> candidates)
         {
             _candidates = candidates.ToArray();
             _definition = new ScoreWeights();
         }
 
-        public StringSearch(IEnumerable<string> candidates, 
+        public FuzzyMatcher(IEnumerable<string> candidates, 
             ScoreWeights definition, decimal threshold = ScoreWeights.DefaultScore)
         {
             _candidates = candidates.ToArray();
@@ -24,7 +24,7 @@ namespace String.Search
             _threshold = threshold;
         }
 
-        public (string match, decimal score) Search(string value)
+        public (string match, decimal score) Match(string value)
         {
             var valueArray = StringSplitter.SplitSortedLowercase(value);
             int index = -1;

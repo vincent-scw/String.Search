@@ -7,19 +7,17 @@ namespace String.Search
 {
     class TrieNode
     {
-        private readonly char data;
-        public bool IsEndingChar { get; private set; }
+        public char Current { get; }
+        public string Data { get; }
+        public bool IsEndingChar { get; set; }
         public IDictionary<char, TrieNode> Children { get; private set; }
+        public TrieNode Fail { get; set; }
 
-        public TrieNode(char data)
+        public TrieNode(char data, IEnumerable<char> previous)
         {
-            this.data = data;
+            Current = data;
+            Data = previous == null ? string.Empty : new string(previous.Append(data).ToArray());
             Children = new Dictionary<char, TrieNode>();
-        }
-
-        public void SetEnding()
-        {
-            IsEndingChar = true;
         }
 
         public TrieNode GetOrAppend(char next)
@@ -28,7 +26,7 @@ namespace String.Search
             var found = Children.TryGetValue(lowered, out TrieNode tnext);
             if (!found)
             {
-                tnext = new TrieNode(lowered);
+                tnext = new TrieNode(lowered, Data);
                 Children.Add(lowered, tnext);
             }
 

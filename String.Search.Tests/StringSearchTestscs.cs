@@ -30,8 +30,8 @@ namespace String.Search.Tests
         [TestMethod]
         public void Search_FromCandidates_ShouldAsExpected()
         {
-            var ss = new StringSearch(_candidates);
-            var result = ss.Search("40' High Cube Dry");
+            var ss = new FuzzyMatcher(_candidates);
+            var result = ss.Match("40' High Cube Dry");
 
             Assert.AreEqual(("_40 HC 40' HIGH CUBE CONTAINER", 3), result);
         }
@@ -39,8 +39,8 @@ namespace String.Search.Tests
         [TestMethod]
         public void Search_NoMatches_ShouldReturnNull()
         {
-            var ss = new StringSearch(_candidates);
-            var result = ss.Search("ABC");
+            var ss = new FuzzyMatcher(_candidates);
+            var result = ss.Match("ABC");
             
             Assert.AreEqual((null, 0), result);
         }
@@ -53,8 +53,8 @@ namespace String.Search.Tests
                 ("container", 0.1m),
                 ("STANDARD", 0.3m)
             );
-            var ss = new StringSearch(_candidates, weights);
-            var result = ss.Search("25' STANDARD CONTAINER");
+            var ss = new FuzzyMatcher(_candidates, weights);
+            var result = ss.Match("25' STANDARD CONTAINER");
 
             Assert.AreEqual((null, 0.4m), result);
         }

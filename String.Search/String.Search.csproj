@@ -4,11 +4,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>vincent-scw</Authors>
     <Company>vincent-scw</Company>
-    <Description>String.Search is a simple library to implement a fuzzy search in a given list.</Description>
+    <Description>String.Search is a simple library to implement a full text search with given patterns.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageTags>string;search</PackageTags>
     <RepositoryUrl>https://github.com/vincent-scw/String.Search.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>1.1.0</Version>
+    <PackageProjectUrl>https://github.com/vincent-scw/String.Search</PackageProjectUrl>
+    <PackageReleaseNotes>Full text search is supported in Release 1.1.0.</PackageReleaseNotes>
+    <Copyright></Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>

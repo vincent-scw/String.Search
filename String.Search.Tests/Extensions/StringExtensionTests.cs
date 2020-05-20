@@ -33,7 +33,7 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
             }).ToArray();
 
             Assert.AreEqual(5, results.Length);
-            Assert.AreEqual(1, results.Where(x => x.value == "neural networks").Count());
+            Assert.AreEqual((497, "neural networks"), results[1]); // 497 is the position
             Assert.AreEqual(1, results.Where(x => x.value == "Neural Networks").Count());
             Assert.AreEqual(2, results.Where(x => x.value == "Deep Learning").Count());
         }

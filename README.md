@@ -1,4 +1,5 @@
 # String.Search
+[![NuGet version (String.Search)](https://img.shields.io/nuget/v/String.Search.svg?style=flat-square)](https://www.nuget.org/packages/String.Search/)
 
 ## What is String.Search?
 String.Search is a simple library to implement a full text search with given patterns.

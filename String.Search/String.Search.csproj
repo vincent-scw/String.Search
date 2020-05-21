@@ -9,9 +9,9 @@
     <PackageTags>string;search</PackageTags>
     <RepositoryUrl>https://github.com/vincent-scw/String.Search.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <PackageProjectUrl>https://github.com/vincent-scw/String.Search</PackageProjectUrl>
-    <PackageReleaseNotes>Full text search is supported in Release 1.1.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added string extensions with given Aho-Corasick pattern matcher</PackageReleaseNotes>
     <Copyright></Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("String.Search.Tests")]
-
 namespace String.Search
 {
-    internal class AcAutoMachine
+    public class AcPatternMatcher
     {
         internal TrieNode Root { get; private set; }
 
-        public AcAutoMachine(IEnumerable<string> terms)
+        public AcPatternMatcher(IEnumerable<string> terms)
         {
             Root = new TrieNode('~', -1); // Any meaningless char is OK here
             foreach (var term in terms)

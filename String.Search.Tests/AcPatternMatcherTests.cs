@@ -8,12 +8,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace String.Search.Tests
 {
     [TestClass]
-    public class AcAutoMachineTests
+    public class AcPatternMatcherTests
     {
         [TestMethod]
         public void TrieExists_Should_ReturnExpected()
         {
-            var trie = new AcAutoMachine(new List<string>
+            var trie = new AcPatternMatcher(new List<string>
             {
                 "how",
                 "hi",
@@ -38,7 +38,7 @@ namespace String.Search.Tests
         [TestMethod]
         public void TrieSearch_Should_ReturnExpected()
         {
-            var trie = new AcAutoMachine(new List<string>
+            var trie = new AcPatternMatcher(new List<string>
             {
                 "abcd",
                 "bcd",

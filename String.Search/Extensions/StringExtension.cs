@@ -55,10 +55,11 @@ namespace String.Search.Extensions
         }
 
         /// <summary>
-        /// Get the distance between two strings
+        /// Get the distance between two strings, using Damerau-Levenshtein Distance Algorithm
         /// </summary>
         /// <param name="me">string A</param>
         /// <param name="other">string B</param>
+        /// <param name="ignoreCase">Case-sensitive?</param>
         /// <returns>Distance</returns>
         public static int DistanceTo(this string me, string other, bool ignoreCase = true)
         {

@@ -53,5 +53,54 @@ namespace String.Search.Extensions
         {
             return acMatcher.Replace(text, replaceWith);
         }
+
+        /// <summary>
+        /// Get the distance between two strings
+        /// </summary>
+        /// <param name="me">string A</param>
+        /// <param name="other">string B</param>
+        /// <returns>Distance</returns>
+        public static int DistanceTo(this string me, string other, bool ignoreCase = true)
+        {
+            if (string.IsNullOrEmpty(me) || string.IsNullOrEmpty(other))
+            {
+                return Math.Max(me?.Length ?? 0, other?.Length ?? 0);
+            }
+
+            if (ignoreCase)
+            {
+                me = me.ToLower();
+                other = other.ToLower();
+            }
+
+            int m = me.Length + 1, n = other.Length + 1;
+            int[,] matrix = new int[m, n];
+
+            for (var i = 0; i < m; i++) { matrix[i, 0] = i; }
+            for (var j = 0; j < n; j++) { matrix[0, j] = j; }
+
+            for (var p = 1; p < m; p++)
+            {
+                for (var q = 1; q < n; q++)
+                {
+                    // If the characters at current position are same, then the cost is 0
+                    var cost = me[p - 1] == other[q - 1] ? 0 : 1;
+                    var insertion = matrix[p, q - 1] + 1;
+                    var deletion = matrix[p - 1, q] + 1;
+                    var sub = matrix[p - 1, q - 1] + cost;
+
+                    // Get the min
+                    var distance = Math.Min(insertion, Math.Min(deletion, sub));
+                    if (p > 1 && q > 1 && me[p - 1] == other[q - 2] && me[q - 2] == other[q - 1])
+                    {
+                        distance = Math.Min(distance, matrix[q - 2, p - 2] + cost);
+                    }
+
+                    matrix[p, q] = distance;
+                }
+            }
+
+            return matrix[m - 1, n - 1];
+        }
     }
 }

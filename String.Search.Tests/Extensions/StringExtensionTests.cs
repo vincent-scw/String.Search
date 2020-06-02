@@ -84,5 +84,20 @@ try ************* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.", resul
 ****的研究历史有着一条从以“推理”为重点，到以“知识”为重点，再到以“学习”为重点的自然、清晰的脉络。显然，****是实现****的一个途径，即以****为手段解决****中的问题。
 ****在近30多年已发展为一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、计算复杂性理论等多门学科。****理论主要是设计和分析一些让计算机可以自动“学习”的算法。", result);
         }
+
+        [TestMethod]
+        public void String_DistanceTo_Should_ReturnExpected()
+        {
+            Assert.AreEqual(1, StringExtension.DistanceTo("as", "ash"));
+            Assert.AreEqual(1, StringExtension.DistanceTo("as", "ASH"));
+            Assert.AreEqual(3, StringExtension.DistanceTo("computer program", "compute progarm"));
+            Assert.AreEqual(1, StringExtension.DistanceTo("人工智能", "人工智障"));
+        }
+
+        [TestMethod]
+        public void String_DistanceTo_Empty_Should_ReturnExpected()
+        {
+            Assert.AreEqual(6, StringExtension.DistanceTo("CSharp", string.Empty));
+        }
     }
 }

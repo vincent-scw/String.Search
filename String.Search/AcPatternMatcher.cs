@@ -4,6 +4,9 @@ using System.Text;
 
 namespace String.Search
 {
+    /// <summary>
+    /// Aho-Corasick pattern matcher
+    /// </summary>
     public class AcPatternMatcher
     {
         internal TrieNode Root { get; private set; }

@@ -20,7 +20,7 @@ namespace String.Search
                 {
                     return new string[] { };
                 }
-                // And space if necessary
+                // Add space if necessary
                 var replaced = Regex.Replace(s, @"((?<=[a-z])[A-Z]|(?<!^)[A-Z](?=[a-z])|(?<![\d])[\d])", " $1");
                 return replaced.Trim().Split(' ');
             });

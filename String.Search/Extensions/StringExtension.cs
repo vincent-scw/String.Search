@@ -90,7 +90,7 @@ namespace String.Search.Extensions
                     var deletion = matrix[p - 1, q] + 1;
                     var sub = matrix[p - 1, q - 1] + cost;
 
-                    // Get the min
+                    // Get the minimum
                     var distance = Math.Min(insertion, Math.Min(deletion, sub));
                     if (p > 1 && q > 1 && me[p - 1] == other[q - 2] && me[q - 2] == other[q - 1])
                     {

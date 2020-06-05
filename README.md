@@ -38,6 +38,8 @@ try Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.";
     Assert.AreEqual(2, results.Where(x => x.value == "Deep Learning").Count());
 ```
 
+It also works for Unicode strings.
+
 - Replace
 ```csharp
     var result = EnglishText.Replace(new List<string>
@@ -58,3 +60,9 @@ try ************* by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.",
 ```
 
 It also works for Unicode strings.
+
+- DistanceTo
+```csharp
+    var result = "toy".DistanceTo("boy"); // result == 1
+    result = "Template".DistanceTo("Tepmlate"); // result == 2
+```
